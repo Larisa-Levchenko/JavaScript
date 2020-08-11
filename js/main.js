@@ -29,6 +29,18 @@ function getTargetMonth(){
 }
 let budgetDay = Math.floor(accumulatedMonth/30);
 
+function getStatusIncome(){
+    if(budgetDay>=1200){
+        return ('У вас высокий уровень дохода');
+    }else if(budgetDay>=600){
+        return ('У вас средний уровень дохода');
+    }else if(budgetDay<0){
+        return ('Что то пошло не так');    
+    }else {
+        return ('К сожалению у вас уровень дохода ниже среднего');
+    }
+}
+
 showTypeOf(money);
 showTypeOf(income);
 showTypeOf(deposit);
@@ -36,3 +48,4 @@ console.log('Расходы за месяц:',accumulatedMonth);
 console.log(addExpenses.toLowerCase().split(' '));
 console.log('Cрок достижения цели в месяцах:', getTargetMonth());
 console.log('Бюджет на день:', budgetDay );
+console.log(getStatusIncome());
