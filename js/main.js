@@ -29,12 +29,12 @@ let period2 = Math.ceil(mission/budgetMonth);
 console.log('Цель будет достугнута за:',period2, 'месяцев');
 let budgetDay = Math.floor(budgetMonth/30);
 console.log(budgetDay);
-if(budgetDay>=1200 ){
+if(budgetDay>=1200){
     console.log('У вас высокий уровень дохода');
-}else if(budgetDay>=600){
+}else if(budgetDay>=600 && budgetDay<1200){
     console.log('У вас средний уровень дохода');
+}else if(budgetDay>0 && budgetDay<600){
+    console.log('К сожалению у вас уровень дохода ниже среднего');
 }else if(budgetDay<0){
     console.log('Что то пошло не так');    
-}else {
-    console.log('К сожалению у вас уровень дохода ниже среднего');
 }
