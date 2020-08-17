@@ -5,12 +5,18 @@ const isNumber = function (n) {
 
 };
 const isString = function (n) {
+    let tmp = false;
     if (n !== null) {
-        return n.trim().length !== 0;
-
-    } else {
-        return n !== null;
+        if (n.trim().length !== 0) {
+            tmp = true;
+            for (let i = 0; i < n.length; i++) {
+                if (isNumber(n[i])) {
+                    tmp = false;
+                }
+            }
+        }
     }
+    return tmp;
 };
 let money,
     start = function () {
