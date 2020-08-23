@@ -28,10 +28,10 @@ const periodAmount = document.querySelector('.period-amount');
 const incomeAmount = document.querySelector('.income-amount');
 const expensesAmount = document.querySelector('.expenses-amount');
 
-const placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
-const placeholderName = document.querySelectorAll('[placeholder=Наименование]');
+let placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
+let placeholderName = document.querySelectorAll('[placeholder=Наименование]');
 
-startBtn.disabled=true;
+startBtn.disabled = true;
 
 const isNumber = function (n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
@@ -89,9 +89,13 @@ let appData = {
         cloneExpensesItem.querySelector('.expenses-amount').value = '';
         expensesItems[0].parentNode.insertBefore(cloneExpensesItem, expensesAddBtn);
         expensesItems = document.querySelectorAll('.expenses-items');
+        placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
+        placeholderName = document.querySelectorAll('[placeholder=Наименование]');
+        appData.validator();        
         if (expensesItems.length === 3) {
             expensesAddBtn.style.display = 'none';
         }
+
     },
     addIncomeBlock: function () {
         let cloneIncomeItem = incomeItems[0].cloneNode(true);
@@ -99,6 +103,9 @@ let appData = {
         cloneIncomeItem.querySelector('.income-amount').value = '';
         incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomeAddBtn);
         incomeItems = document.querySelectorAll('.income-items');
+        placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
+        placeholderName = document.querySelectorAll('[placeholder=Наименование]');
+        appData.validator();
         if (incomeItems.length === 3) {
             incomeAddBtn.style.display = 'none';
         }
@@ -176,8 +183,8 @@ let appData = {
         periodSelect.addEventListener('input', appData.showResult);
 
     },
-    addNumber: function(){
-        if (event.keyCode < 48 || event.keyCode > 57){
+    addNumber: function () {
+        if (event.keyCode < 48 || event.keyCode > 57) {
             event.returnValue = false;
         }
     },
@@ -185,6 +192,14 @@ let appData = {
         if (event.keyCode !== 32 && (event.keyCode < 1040 || event.keyCode > 1105) && (event.keyCode < 33 || event.keyCode > 47)) {
             event.returnValue = false;
         }
+    },
+    validator: function () {
+        placeholderSum.forEach(function (item, i) {
+            placeholderSum[i].addEventListener('keypress', appData.addNumber);
+        });
+        placeholderName.forEach(function (item, i) {
+            placeholderName[i].addEventListener('keypress', appData.addText);
+        });
     }
 };
 startBtn.addEventListener('click', appData.start);
@@ -194,17 +209,5 @@ periodSelect.addEventListener('input', function () {
     periodAmount.textContent = periodSelect.value;
 });
 salaryAmount.addEventListener('input', appData.disabledBtn);
-
-placeholderSum.forEach(function(item, i){
-    placeholderSum[i].addEventListener('keypress', appData.addNumber);
-}
-);
-placeholderName.forEach(function (item, i) {
-    placeholderName[i].addEventListener('keypress', appData.addText);
-});
-
-
-
-
-
+appData.validator();
 
