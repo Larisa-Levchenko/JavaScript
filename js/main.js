@@ -73,7 +73,7 @@ let appData = {
         appData.getAddExpenses();
         appData.getAddIncome();
         appData.getInfoDeposit();
-        
+
         appData.showResult();
     },
     disabledBtn: function () {
@@ -81,7 +81,7 @@ let appData = {
             startBtn.disabled = true;
         } else {
             startBtn.disabled = false;
-        }        
+        }
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
@@ -91,11 +91,11 @@ let appData = {
         expensesItems = document.querySelectorAll('.expenses-items');
         placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
-        appData.validator();        
+        appData.validator();
         if (expensesItems.length === 3) {
             expensesAddBtn.style.display = 'none';
         }
-        
+
 
     },
     addIncomeBlock: function () {
@@ -200,11 +200,10 @@ let appData = {
         });
         placeholderName.forEach(function (item, i) {
             placeholderName[i].addEventListener('keypress', appData.addText);
-        });        
+        });
     },
-    periodAdd: function(){
+    periodAdd: function () {
         periodAmount.textContent = periodSelect.value;
-        console.log(this);
     }
 };
 let startFunc = appData.start.bind(appData);
@@ -220,4 +219,3 @@ incomeAddBtn.addEventListener('click', incomeAddBtnFunc);
 periodSelect.addEventListener('input', periodAddFunc);
 salaryAmount.addEventListener('input', disabledBtn);
 appData.validator();
-
