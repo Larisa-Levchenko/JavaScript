@@ -73,7 +73,7 @@ let appData = {
         appData.getAddExpenses();
         appData.getAddIncome();
         appData.getInfoDeposit();
-
+        
         appData.showResult();
     },
     disabledBtn: function () {
@@ -81,7 +81,7 @@ let appData = {
             startBtn.disabled = true;
         } else {
             startBtn.disabled = false;
-        }
+        }        
     },
     addExpensesBlock: function () {
         let cloneExpensesItem = expensesItems[0].cloneNode(true);
@@ -95,6 +95,7 @@ let appData = {
         if (expensesItems.length === 3) {
             expensesAddBtn.style.display = 'none';
         }
+        
 
     },
     addIncomeBlock: function () {
@@ -199,15 +200,24 @@ let appData = {
         });
         placeholderName.forEach(function (item, i) {
             placeholderName[i].addEventListener('keypress', appData.addText);
-        });
+        });        
+    },
+    periodAdd: function(){
+        periodAmount.textContent = periodSelect.value;
+        console.log(this);
     }
 };
-startBtn.addEventListener('click', appData.start);
-expensesAddBtn.addEventListener('click', appData.addExpensesBlock);
-incomeAddBtn.addEventListener('click', appData.addIncomeBlock);
-periodSelect.addEventListener('input', function () {
-    periodAmount.textContent = periodSelect.value;
-});
-salaryAmount.addEventListener('input', appData.disabledBtn);
+let startFunc = appData.start.bind(appData);
+let expensesAddFunc = appData.addExpensesBlock.bind(appData);
+let incomeAddBtnFunc = appData.addIncomeBlock.bind(appData);
+let disabledBtn = appData.disabledBtn.bind(appData);
+let periodAddFunc = appData.periodAdd.bind(appData);
+
+startBtn.addEventListener('click', startFunc);
+expensesAddBtn.addEventListener('click', expensesAddFunc);
+incomeAddBtn.addEventListener('click', incomeAddBtnFunc);
+
+periodSelect.addEventListener('input', periodAddFunc);
+salaryAmount.addEventListener('input', disabledBtn);
 appData.validator();
 
