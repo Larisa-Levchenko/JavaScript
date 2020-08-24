@@ -1,6 +1,7 @@
 'use strict';
 
 const startBtn = document.getElementById('start');
+const cancelBtn = document.getElementById('cancel');
 const btn = document.getElementsByTagName('button');
 const incomeAddBtn = document.getElementsByTagName('button')[0];
 const expensesAddBtn = document.getElementsByTagName('button')[1];
@@ -30,6 +31,8 @@ const expensesAmount = document.querySelector('.expenses-amount');
 
 let placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
 let placeholderName = document.querySelectorAll('[placeholder=Наименование]');
+let input = document.querySelectorAll('input[type=text]');
+console.log();
 
 startBtn.disabled = true;
 
@@ -75,6 +78,45 @@ let appData = {
         appData.getInfoDeposit();
 
         appData.showResult();
+        startBtn.style.display='none';
+        cancelBtn.style.display = 'block';
+        for (let i = 0; i < input.length - 7; i++) {
+            input[i].disabled = true;
+        }
+        incomeAddBtn.disabled=true;
+        expensesAddBtn.disabled=true;
+        depositCheck.disabled=true;
+        periodSelect.disabled=true;
+        
+    },
+    reset: function(){
+         for (let i = 0; i < input.length - 7; i++) {
+            input[i].disabled = false;
+         }
+        input.forEach(function (item) {            
+            item.value='';
+        });
+        periodSelect.value=1;
+        periodAmount.textContent=1;
+        depositCheck.checked=false;
+        cancelBtn.style.display = 'none';
+        startBtn.style.display = 'block';
+        incomeAddBtn.disabled = false;
+        expensesAddBtn.disabled = false;
+        depositCheck.disabled = false;
+        periodSelect.disabled = false;
+        for (let i = 0; i < incomeItems.length;i++){
+           if(i!==0){
+               incomeItems[i].remove();
+           }
+        }
+        for (let i = 0; i < expensesItems.length; i++) {
+            if (i !== 0) {
+                incomeItems[i].remove();
+            }
+        }
+        startBtn.disabled = true;
+       
     },
     disabledBtn: function () {
         if (salaryAmount.value === '') {
@@ -92,6 +134,8 @@ let appData = {
         placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
         appData.validator();
+        input = document.querySelectorAll('input[type=text]');
+
         if (expensesItems.length === 3) {
             expensesAddBtn.style.display = 'none';
         }
@@ -107,6 +151,8 @@ let appData = {
         placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
         appData.validator();
+        input = document.querySelectorAll('input[type=text]');
+         
         if (incomeItems.length === 3) {
             incomeAddBtn.style.display = 'none';
         }
@@ -119,6 +165,7 @@ let appData = {
                 appData.expenses[titleExpenses] = +cashExpenses;
             }
         });
+       
         for (let key in appData.expenses) {
             appData.expensesMonth += appData.expenses[key];
         }
@@ -207,15 +254,18 @@ let appData = {
     }
 };
 let startFunc = appData.start.bind(appData);
+let resetFunc = appData.reset.bind(appData);
 let expensesAddFunc = appData.addExpensesBlock.bind(appData);
 let incomeAddBtnFunc = appData.addIncomeBlock.bind(appData);
 let disabledBtn = appData.disabledBtn.bind(appData);
 let periodAddFunc = appData.periodAdd.bind(appData);
 
 startBtn.addEventListener('click', startFunc);
+cancelBtn.addEventListener('click', resetFunc);
 expensesAddBtn.addEventListener('click', expensesAddFunc);
 incomeAddBtn.addEventListener('click', incomeAddBtnFunc);
 
 periodSelect.addEventListener('input', periodAddFunc);
 salaryAmount.addEventListener('input', disabledBtn);
 appData.validator();
+
