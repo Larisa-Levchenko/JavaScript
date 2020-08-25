@@ -78,45 +78,44 @@ let appData = {
         appData.getInfoDeposit();
 
         appData.showResult();
-        startBtn.style.display='none';
+        startBtn.style.display = 'none';
         cancelBtn.style.display = 'block';
         for (let i = 0; i < input.length - 7; i++) {
             input[i].disabled = true;
         }
-        incomeAddBtn.disabled=true;
-        expensesAddBtn.disabled=true;
-        depositCheck.disabled=true;
-        periodSelect.disabled=true;
-        
+        incomeAddBtn.disabled = true;
+        expensesAddBtn.disabled = true;
+        depositCheck.disabled = true;
+
     },
-    reset: function(){
-         for (let i = 0; i < input.length - 7; i++) {
+    reset: function () {
+        for (let i = 0; i < input.length - 7; i++) {
             input[i].disabled = false;
-         }
-        input.forEach(function (item) {            
-            item.value='';
+        }
+        input.forEach(function (item) {
+            item.value = '';
         });
-        periodSelect.value=1;
-        periodAmount.textContent=1;
-        depositCheck.checked=false;
+        periodSelect.value = 1;
+        periodAmount.textContent = 1;
+        depositCheck.checked = false;
         cancelBtn.style.display = 'none';
         startBtn.style.display = 'block';
         incomeAddBtn.disabled = false;
         expensesAddBtn.disabled = false;
         depositCheck.disabled = false;
         periodSelect.disabled = false;
-        for (let i = 0; i < incomeItems.length;i++){
-           if(i!==0){
-               incomeItems[i].remove();
-           }
-        }
-        for (let i = 0; i < expensesItems.length; i++) {
+        for (let i = 0; i < incomeItems.length; i++) {
             if (i !== 0) {
                 incomeItems[i].remove();
             }
         }
+        for (let i = 0; i < expensesItems.length; i++) {
+            if (i !== 0) {
+                expensesItems[i].remove();
+            }
+        }
         startBtn.disabled = true;
-       
+
     },
     disabledBtn: function () {
         if (salaryAmount.value === '') {
@@ -152,7 +151,7 @@ let appData = {
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
         appData.validator();
         input = document.querySelectorAll('input[type=text]');
-         
+
         if (incomeItems.length === 3) {
             incomeAddBtn.style.display = 'none';
         }
@@ -165,7 +164,7 @@ let appData = {
                 appData.expenses[titleExpenses] = +cashExpenses;
             }
         });
-       
+
         for (let key in appData.expenses) {
             appData.expensesMonth += appData.expenses[key];
         }
@@ -268,4 +267,3 @@ incomeAddBtn.addEventListener('click', incomeAddBtnFunc);
 periodSelect.addEventListener('input', periodAddFunc);
 salaryAmount.addEventListener('input', disabledBtn);
 appData.validator();
-
