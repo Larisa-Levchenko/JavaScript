@@ -69,15 +69,16 @@ let appData = {
     persentDeposit: 0,
     moneyDeposit: 0,
     start: function () {
-        appData.budget = salaryAmount.value;
-        appData.getExpenses();
-        appData.getIncome();
-        appData.getBudget();
-        appData.getAddExpenses();
-        appData.getAddIncome();
-        appData.getInfoDeposit();
-
-        appData.showResult();
+        this.budget = salaryAmount.value;
+        this.period = periodAmount.textContent;
+        this.getExpenses();
+        this.getIncome();
+        this.getBudget();
+        this.getAddExpenses();
+        this.getAddIncome();
+        this.getInfoDeposit();
+       
+        this.showResult();
         startBtn.style.display = 'none';
         cancelBtn.style.display = 'block';
         for (let i = 0; i < input.length - 7; i++) {
@@ -86,7 +87,6 @@ let appData = {
         incomeAddBtn.disabled = true;
         expensesAddBtn.disabled = true;
         depositCheck.disabled = true;
-
     },
     reset: function () {
         for (let i = 0; i < input.length - 7; i++) {
@@ -115,6 +115,8 @@ let appData = {
             }
         }
         startBtn.disabled = true;
+        expensesAddBtn.style.display = 'block';
+        incomeAddBtn.style.display = 'block';
 
     },
     disabledBtn: function () {
@@ -132,7 +134,7 @@ let appData = {
         expensesItems = document.querySelectorAll('.expenses-items');
         placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
-        appData.validator();
+        this.validator();        
         input = document.querySelectorAll('input[type=text]');
 
         if (expensesItems.length === 3) {
@@ -149,7 +151,7 @@ let appData = {
         incomeItems = document.querySelectorAll('.income-items');
         placeholderSum = document.querySelectorAll('[placeholder=Сумма]');
         placeholderName = document.querySelectorAll('[placeholder=Наименование]');
-        appData.validator();
+        this.validator();
         input = document.querySelectorAll('input[type=text]');
 
         if (incomeItems.length === 3) {
@@ -161,12 +163,12 @@ let appData = {
             let titleExpenses = item.querySelector('.expenses-title').value;
             let cashExpenses = item.querySelector('.expenses-amount').value;
             if (titleExpenses !== '' && cashExpenses !== '') {
-                appData.expenses[titleExpenses] = +cashExpenses;
+                appData.expenses[titleExpenses] = +cashExpenses;                
             }
         });
-
-        for (let key in appData.expenses) {
-            appData.expensesMonth += appData.expenses[key];
+        
+        for (let key in this.expenses) {
+            this.expensesMonth += this.expenses[key];            
         }
     },
     getIncome: function () {
@@ -174,14 +176,14 @@ let appData = {
             let titleIncome = item.querySelector('.income-title').value;
             let cashIncome = item.querySelector('.income-amount').value;
             if (titleIncome !== '' && cashIncome !== '') {
-                appData.income[titleIncome] = +cashIncome;
+                appData.income[titleIncome] = +cashIncome;               
             }
         });
 
     },
     getBudget: function () {
-        appData.budgetMonth = appData.budget - appData.expensesMonth;
-        appData.budgetDay = Math.floor(appData.budgetMonth / 30);
+        this.budgetMonth = this.budget - this.expensesMonth;
+        this.budgetDay = Math.floor(this.budgetMonth / 30);        
     },
     getAddExpenses: function () {
         let addExpenses = additionalExpensesItem.value.split(',');
@@ -201,10 +203,11 @@ let appData = {
         });
     },
     getTargetMonth: function () {
-        return Math.ceil(targetAmount.value / appData.expensesMonth);
+        return Math.ceil(targetAmount.value / this.budgetMonth);
     },
-    calcSaveMoney: function () {
-        return appData.budgetMonth * periodSelect.value;
+    calcSaveMoney: function () {              
+        return this.budgetMonth * this.period;    
+            
     },
     getInfoDeposit: function () {
         if (depositCheck.checked) {
@@ -219,16 +222,15 @@ let appData = {
 
         }
     },
-    showResult: function () {
-        budgetMonth.value = appData.budgetMonth;
-        budgetDay.value = appData.budgetDay;
-        expensesMonth.value = appData.expensesMonth;
-        additionalExpenses.value = appData.addExpenses.join(', ');
-        additionalIncome.value = appData.addIncome.join(', ');
-        incomePeriod.value = appData.calcSaveMoney();
-        targetMonth.value = appData.getTargetMonth();
-        periodSelect.addEventListener('input', appData.showResult);
-
+    showResult: function () { 
+        console.log(this);    
+        budgetMonth.value = this.budgetMonth;
+        budgetDay.value = this.budgetDay;
+        expensesMonth.value = this.expensesMonth;
+        additionalExpenses.value = this.addExpenses.join(', ');
+        additionalIncome.value = this.addIncome.join(', ');
+        incomePeriod.value = this.calcSaveMoney();
+        targetMonth.value = this.getTargetMonth();          
     },
     addNumber: function () {
         if (event.keyCode < 48 || event.keyCode > 57) {
@@ -242,14 +244,16 @@ let appData = {
     },
     validator: function () {
         placeholderSum.forEach(function (item, i) {
-            placeholderSum[i].addEventListener('keypress', appData.addNumber);
+            placeholderSum[i].addEventListener('keypress', appData.addNumber);           
         });
         placeholderName.forEach(function (item, i) {
             placeholderName[i].addEventListener('keypress', appData.addText);
         });
     },
     periodAdd: function () {
-        periodAmount.textContent = periodSelect.value;
+        periodAmount.textContent = periodSelect.value;  
+        this.period = periodAmount.textContent;
+        this.showResult();
     }
 };
 let startFunc = appData.start.bind(appData);
