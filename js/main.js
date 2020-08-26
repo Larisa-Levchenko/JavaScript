@@ -245,7 +245,9 @@ let appData = {
         additionalIncome.value = this.addIncome.join(', ');
         incomePeriod.value = this.calcSaveMoney();
         targetMonth.value = this.getTargetMonth();
-        periodSelect.addEventListener('input', appData.showResult.bind(appData));
+        periodSelect.addEventListener('input', function(){            
+            incomePeriod.value = appData.calcSaveMoney();
+        });
 
     },
     addNumber: function () {
