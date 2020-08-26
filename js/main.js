@@ -183,7 +183,7 @@ let appData = {
         });
         
 
-        for (let key in appData.expenses) {
+        for (let key in this.expenses) {
             this.expensesMonth += this.expenses[key];
         }
     },
@@ -225,15 +225,15 @@ let appData = {
         return this.budgetMonth * periodSelect.value;
     },
     getInfoDeposit: function () {
-        if (depositCheck.checked) {
+        if (depositCheck.checked) {           
             do {
-                appData.persentDeposit = prompt('Какой годовой процент?');
+                this.persentDeposit = prompt('Какой годовой процент?');
             }
-            while (!isNumber(appData.persentDeposit));
+            while (!isNumber(this.persentDeposit));
             do {
-                appData.moneyDeposit = prompt('Какая сумма заложена?');
+                this.moneyDeposit = prompt('Какая сумма заложена?');
             }
-            while (!isNumber(appData.moneyDeposit));
+            while (!isNumber(this.moneyDeposit));
 
         }
     },
@@ -245,7 +245,7 @@ let appData = {
         additionalIncome.value = this.addIncome.join(', ');
         incomePeriod.value = this.calcSaveMoney();
         targetMonth.value = this.getTargetMonth();
-        periodSelect.addEventListener('input', this.showResult);
+        periodSelect.addEventListener('input', appData.showResult.bind(appData));
 
     },
     addNumber: function () {
