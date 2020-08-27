@@ -100,9 +100,8 @@ class AppData {
         }
         
         expensesAddBtn.style.display = '';
-        incomeAddBtn.style.display = '';
-        let key;
-        for (key in this) {
+        incomeAddBtn.style.display = '';        
+        for (let key in this) {
             this[key] = this.default[key];
         }
     }    
