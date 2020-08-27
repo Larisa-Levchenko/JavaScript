@@ -70,9 +70,11 @@ class AppData {
         this.expensesMonth = 0;
         this.persentDeposit = 0;
         this.moneyDeposit = 0;
+        
     }
-
+       
     start () {
+        this.default = new AppData();
         this.budget = salaryAmount.value;
         this.getExpenses();
         this.getIncome();
@@ -92,7 +94,7 @@ class AppData {
         depositCheck.disabled = true;
     }
 
-    reset () {
+    reset() {
         for (let i = 0; i < input.length - 7; i++) {
             input[i].disabled = false;
         }
@@ -121,24 +123,12 @@ class AppData {
         startBtn.disabled = true;
         expensesAddBtn.style.display = '';
         incomeAddBtn.style.display = '';
-        this.resetValue();
-
-    }
-    resetValue() {
-        this.income = {};
-        this.addIncome = [];
-        this.expenses = {};
-        this.addExpenses = [];
-        this.deposit = false;
-        this.period = 0;
-        this.budget = 0;
-        this.budgetDay = 0;
-        this.budgetMonth = 0;
-        this.expensesMonth = 0;
-        this.persentDeposit = 0;
-        this.moneyDeposit = 0;
-    }
-
+        let key;
+        for (key in this) {
+            this[key] = this.default[key];
+        }
+    }    
+    
     disabledBtn() {
         if (salaryAmount.value === '') {
             startBtn.disabled = true;
