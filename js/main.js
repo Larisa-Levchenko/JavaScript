@@ -34,28 +34,6 @@ let placeholderName = document.querySelectorAll('[placeholder=Наименова
 let input = document.querySelectorAll('input[type=text]');
 
 
-
-const isNumber = (n) => {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-
-};
-const isString = (n) => {
-    let tmp = false;
-    if (n !== null) {
-        if (n.trim().length !== 0) {
-            tmp = true;
-            for (let i = 0; i < n.length; i++) {
-                if (isNumber(n[i])) {
-                    tmp = false;
-                }
-            }
-        }
-    }
-    return tmp;
-};
-
-startBtn.disabled = true;
-
 class AppData {
     constructor() {
         this.income = {};
@@ -72,7 +50,7 @@ class AppData {
         this.moneyDeposit = 0;
         
     }
-       
+    
     start () {
         this.default = new AppData();
         this.budget = salaryAmount.value;
@@ -120,7 +98,7 @@ class AppData {
                 expensesItems[i].remove();
             }
         }
-        startBtn.disabled = true;
+        
         expensesAddBtn.style.display = '';
         incomeAddBtn.style.display = '';
         let key;
@@ -128,13 +106,14 @@ class AppData {
             this[key] = this.default[key];
         }
     }    
-    
+
+    isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+
+    }
+
     disabledBtn() {
-        if (salaryAmount.value === '') {
-            startBtn.disabled = true;
-        } else {
-            startBtn.disabled = false;
-        }
+        startBtn.disabled = !salaryAmount.value.trim();
     }
 
     addExpensesBlock() {
@@ -233,11 +212,11 @@ class AppData {
             do {
                 this.persentDeposit = prompt('Какой годовой процент?');
             }
-            while (!isNumber(this.persentDeposit));
+            while (!this.isNumber(this.persentDeposit));
             do {
                 this.moneyDeposit = prompt('Какая сумма заложена?');
             }
-            while (!isNumber(this.moneyDeposit));
+            while (!this.isNumber(this.moneyDeposit));
 
         }
     }
