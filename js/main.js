@@ -278,7 +278,7 @@ class AppData {
             depositAmount.value='';
             this.deposit = 'false';
             depositBank.removeEventListener('input', this.validatorPercent);
-            
+            depositPercent.removeEventListener('input', this.validatorPercent);
         }
     }
 
