@@ -256,6 +256,7 @@ class AppData {
             depositPercent.disabled = false;
             depositPercent.value='';
             startBtn.disabled = true;
+            
         }else{
             depositPercent.style.display = '';
             depositPercent.disabled = true;
@@ -269,8 +270,8 @@ class AppData {
             depositBank.style.display='inline-block';
             depositAmount.style.display='inline-block';
             this.deposit='true';
-            depositBank.addEventListener('input', this.changePercent);            
-            depositPercent.addEventListener('input', this.validatorPercent);           
+            depositBank.addEventListener('input', this.changePercent);        
+            depositPercent.addEventListener('input', this.validatorPercent.bind(this));
         }else{
             depositBank.style.display = '';
             depositAmount.style.display = '';
@@ -278,7 +279,7 @@ class AppData {
             depositAmount.value='';
             this.deposit = 'false';
             depositBank.removeEventListener('input', this.validatorPercent);
-            depositPercent.removeEventListener('input', this.validatorPercent);
+            depositPercent.removeEventListener('input', this.validatorPercent.bind(this));
         }
     }
 
@@ -295,8 +296,8 @@ class AppData {
     }   
 
     validatorPercent(){        
-        if (depositPercent.value > 0 && depositPercent.value < 100){           
-            this.disabledBtn();        
+        if (depositPercent.value > 0 && depositPercent.value < 100){ 
+            this.disabledBtn();                   
         }else{
             alert('Введите корректное значение в поле проценты');
         }
