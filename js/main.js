@@ -255,6 +255,7 @@ class AppData {
             depositPercent.style.display = 'inline-block';
             depositPercent.disabled = false;
             depositPercent.value='';
+            startBtn.disabled = true;
         }else{
             depositPercent.style.display = '';
             depositPercent.disabled = true;
@@ -268,15 +269,15 @@ class AppData {
             depositBank.style.display='inline-block';
             depositAmount.style.display='inline-block';
             this.deposit='true';
-            depositBank.addEventListener('input', this.changePercent);
-           
+            depositBank.addEventListener('input', this.changePercent);            
+            depositPercent.addEventListener('input', this.validatorPercent);           
         }else{
             depositBank.style.display = '';
             depositAmount.style.display = '';
             depositBank.value=0;
             depositAmount.value='';
             this.deposit = 'false';
-            depositBank.removeEventListener('input', this.changePercent);
+            depositBank.removeEventListener('input', this.validatorPercent);
             
         }
     }
@@ -290,19 +291,16 @@ class AppData {
     }
 
     disabledBtn() {
-        if (depositCheck.checked){
-            if (depositPercent.value > 0 && depositPercent.value < 100) {
-                startBtn.disabled = !salaryAmount.value.trim();
-            } else {
-                startBtn.disabled = true;
-                alert('Введите корректное значение в поле проценты');
-            }
-
-        }else{
-        startBtn.disabled = !salaryAmount.value.trim();
-        }
-        
+        startBtn.disabled = !salaryAmount.value.trim();              
     }   
+
+    validatorPercent(){        
+        if (depositPercent.value > 0 && depositPercent.value < 100){           
+            this.disabledBtn();        
+        }else{
+            alert('Введите корректное значение в поле проценты');
+        }
+    }
 
     eventsListeners() {
         startBtn.addEventListener('click', this.start.bind(this));
@@ -310,8 +308,7 @@ class AppData {
         expensesAddBtn.addEventListener('click', this.addExpensesBlock.bind(this));
         incomeAddBtn.addEventListener('click', this.addIncomeBlock.bind(this));
 
-        periodSelect.addEventListener('input', this.periodAdd.bind(this));
-        depositPercent.addEventListener('input', this.disabledBtn.bind(this));
+        periodSelect.addEventListener('input', this.periodAdd.bind(this));        
         salaryAmount.addEventListener('input', this.disabledBtn.bind(this));
        
         this.validator();
