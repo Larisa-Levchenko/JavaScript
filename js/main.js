@@ -256,11 +256,12 @@ class AppData {
             depositPercent.disabled = false;
             depositPercent.value='';
             startBtn.disabled = true;
-            
+           
         }else{
             depositPercent.style.display = '';
             depositPercent.disabled = true;
             depositPercent.value=valueSelect*100;
+            startBtn.disabled = !salaryAmount.value.trim();
         }
 
     }
@@ -270,7 +271,7 @@ class AppData {
             depositBank.style.display='inline-block';
             depositAmount.style.display='inline-block';
             this.deposit='true';
-            depositBank.addEventListener('input', this.changePercent);        
+            depositBank.addEventListener('input', this.changePercent);       
             depositPercent.addEventListener('input', this.validatorPercent.bind(this));
         }else{
             depositBank.style.display = '';
