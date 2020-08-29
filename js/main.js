@@ -288,8 +288,7 @@ class AppData {
         if(this.deposit){
              this.persentDeposit = +depositPercent.value;
              this.moneyDeposit = +depositAmount.value;
-        }       
-        
+        }  
     }
 
     disabledBtn() {
@@ -301,6 +300,7 @@ class AppData {
             this.disabledBtn();                   
         }else{
             alert('Введите корректное значение в поле проценты');
+            startBtn.disabled = true;
         }
     }
 
