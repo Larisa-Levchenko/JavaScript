@@ -294,8 +294,8 @@ class AppData {
     }
 
     disabledBtn() {
-        if (depositCheck.checked){           
-            if (depositPercent.value!=='' && depositAmount!==''){
+        if (depositCheck.checked){                  
+            if (depositPercent.value!=='' && depositAmount.value!==''){
                 startBtn.disabled = !salaryAmount.value.trim();
             }
             else {
@@ -317,6 +317,7 @@ class AppData {
     }
 
     eventsListeners() {
+        startBtn.disabled=true;
         startBtn.addEventListener('click', this.start.bind(this));
         cancelBtn.addEventListener('click', this.reset.bind(this));
         expensesAddBtn.addEventListener('click', this.addExpensesBlock.bind(this));
